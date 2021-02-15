@@ -1,6 +1,0 @@
-<library path="lib/libFABRIK_kinematics_plugin">
-	<class name="FABRIK_kinematics_plugin/FABRIKKinematicsPlugin" type="FABRIK_kinematics_plugin::FABRIKKinematicsPlugin" base_class_type="kinematics::KinematicsBase">
-		<description> it is a test </description>
-	</class>
-
-</library>
