@@ -1,0 +1,9 @@
+<library path="lib/libFABRIK_moveit_plugin">
+  <class name="FABRIK_kinematics/FABRIKKinematicsPlugin" type="FABRIK_kinematics::FABRIKKinematicsPlugin" base_class_type="kinematics::KinematicsBase">
+    <description>
+      Analytic kinematics for the panda.
+      Developed by Kelsey Hawkins from Georgia Tech.
+      See http://hdl.handle.net/1853/50782 for details.
+    </description>
+  </class>
+</library>
