@@ -473,7 +473,7 @@ int FABRIKKinematicsPlugin::CartToJnt(KDL::ChainIkSolverVelMimicSVD& ik_solver, 
 
   int result = (i == max_iter) ? -3 : (success ? 0 : -2);
   ROS_DEBUG_STREAM_NAMED("kdl", "Result " << result << " after " << i << " iterations: " << q_out);
-
+  //std::cout <<q_out;
   return result;
 }
 
