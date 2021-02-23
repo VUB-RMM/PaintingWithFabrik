@@ -6,6 +6,16 @@
 //#include <FABRIK_kinematics/joint_mimic.hpp>
 
 
+#include <string>
+#include <string>
+#include <cstdlib>
+#include <algorithm>
+
+#include <cstdio>
+#include <iostream>
+#include <memory>
+#include <stdexcept>
+#include <array>
 
 #include <tf2_kdl/tf2_kdl.h>
 #include <tf2/transform_datatypes.h>
@@ -19,6 +29,9 @@
 // register KDLKinematics as a KinematicsBase implementation
 #include <class_loader/class_loader.hpp>
 #include <pluginlib/class_list_macros.h>
+
+using namespace std;
+
 CLASS_LOADER_REGISTER_CLASS(FABRIK_kinematics::FABRIKKinematicsPlugin, kinematics::KinematicsBase)
 
 
@@ -31,6 +44,20 @@ namespace FABRIK_kinematics
 FABRIKKinematicsPlugin::FABRIKKinematicsPlugin() : initialized_(false)
 {
 }
+
+std::string exec(const char* cmd) {
+    std::array<char, 128> buffer;
+    std::string result;
+    std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(cmd, "r"), pclose);
+    if (!pipe) {
+        throw std::runtime_error("popen() failed!");
+    }
+    while (fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr) {
+        result += buffer.data();
+    }
+    return result;
+}
+
 
 void FABRIKKinematicsPlugin::getRandomConfiguration(Eigen::VectorXd& jnt_array) const
 {
@@ -413,6 +440,9 @@ int FABRIKKinematicsPlugin::CartToJnt(KDL::ChainIkSolverVelMimicSVD& ik_solver, 
 
   unsigned int i;
   bool success = false;
+  // cout<<p_in<<endl;
+  // cout<<"-----------------"<<p_in.p[0]<<endl;
+
   for (i = 0; i < max_iter; ++i)
   {
     fk_solver_->JntToCart(q_out, f);
@@ -472,6 +502,52 @@ int FABRIKKinematicsPlugin::CartToJnt(KDL::ChainIkSolverVelMimicSVD& ik_solver, 
   }
 
   int result = (i == max_iter) ? -3 : (success ? 0 : -2);
+
+
+
+
+    
+
+
+
+  // here we call FABRIK and fill q_out by it
+	// string str = exec(("python \"/home/atieh/Documents/PHD/PaintingWithFabrik/src/FABRIK_kinematics/src/Main.py \"" + std::to_string(p_in.p[0]) + " " + std::to_string(p_in.p[1]) + " " + std::to_string(p_in.p[2])).c_str());
+  string str = exec("python \"/home/atieh/Documents/PHD/PaintingWithFabrik/src/FABRIK_kinematics/src/Main.py\"");
+  std::cout<<str;
+
+  int counter = 0;
+
+  std::string s = str.substr(1, str.length());
+  std::string delimiter = ",";
+
+  size_t pos = 0;
+  std::string token;
+  while ((pos = s.find(delimiter)) != std::string::npos) {
+      token = s.substr(0, pos);
+      float detected_q = std::stof(token);
+      q_out(counter) = detected_q;
+      counter++;
+      // std::cout << token << std::endl;
+      s.erase(0, pos + delimiter.length());
+      }
+  float detected_s = std::stof(s);
+  q_out(counter) = detected_s;
+
+
+  //std::cout<<q_out;
+
+
+
+
+
+
+
+
+
+
+
+
+
   ROS_DEBUG_STREAM_NAMED("kdl", "Result " << result << " after " << i << " iterations: " << q_out);
   //std::cout <<q_out;
   return result;

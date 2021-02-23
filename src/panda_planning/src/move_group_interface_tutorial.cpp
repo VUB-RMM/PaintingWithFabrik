@@ -1,40 +1,3 @@
-/*********************************************************************
- * Software License Agreement (BSD License)
- *
- *  Copyright (c) 2013, SRI International
- *  All rights reserved.
- *
- *  Redistribution and use in source and binary forms, with or without
- *  modification, are permitted provided that the following conditions
- *  are met:
- *
- *   * Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
- *   * Redistributions in binary form must reproduce the above
- *     copyright notice, this list of conditions and the following
- *     disclaimer in the documentation and/or other materials provided
- *     with the distribution.
- *   * Neither the name of SRI International nor the names of its
- *     contributors may be used to endorse or promote products derived
- *     from this software without specific prior written permission.
- *
- *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- *  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
- *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
- *  FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
- *  COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
- *  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
- *  BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- *  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- *  CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- *  LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- *  ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- *  POSSIBILITY OF SUCH DAMAGE.
- *********************************************************************/
-
-/* Author: Sachin Chitta, Dave Coleman, Mike Lautman */
-
-
 #include <moveit/move_group_interface/move_group_interface.h>
 #include <moveit/planning_scene_interface/planning_scene_interface.h>
 
@@ -120,6 +83,10 @@ int main(int argc, char** argv)
   // ^^^^^^^^^^^^^^^^^^^^^^^^^
   visual_tools.prompt("Press 'next' in the RvizVisualToolsGui window to start the demo");
 
+
+
+
+
   // Planning to a Pose goal
   // ^^^^^^^^^^^^^^^^^^^^^^^
   // We can plan a motion for this group to a desired pose for the
@@ -164,6 +131,10 @@ int main(int argc, char** argv)
   /* Uncomment below line when working with a real robot */
   /* move_group.move(); */
 
+
+
+
+
   // Planning to a joint-space goal
   // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   //
@@ -191,6 +162,11 @@ int main(int argc, char** argv)
   visual_tools.publishTrajectoryLine(my_plan.trajectory_, joint_model_group);
   visual_tools.trigger();
   visual_tools.prompt("Press 'next' in the RvizVisualToolsGui window to continue the demo");
+
+
+
+
+
 
   // Planning with Path Constraints
   // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -245,6 +221,13 @@ int main(int argc, char** argv)
   visual_tools.trigger();
   visual_tools.prompt("next step");
 
+
+
+
+
+
+
+
   // When done with the path constraint be sure to clear it.
   move_group.clearPathConstraints();
 
@@ -295,6 +278,13 @@ int main(int argc, char** argv)
   visual_tools.trigger();
   visual_tools.prompt("Press 'next' in the RvizVisualToolsGui window to continue the demo");
 
+
+
+
+
+
+
+
   // Adding/Removing Objects and Attaching/Detaching Objects
   // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   //
@@ -338,6 +328,11 @@ int main(int argc, char** argv)
   // Wait for MoveGroup to recieve and process the collision object message
   visual_tools.prompt("Press 'next' in the RvizVisualToolsGui window to once the collision object appears in RViz");
 
+
+
+
+
+
   // Now when we plan a trajectory it will avoid the obstacle
   move_group.setStartState(*move_group.getCurrentState());
   geometry_msgs::Pose another_pose;
@@ -356,6 +351,12 @@ int main(int argc, char** argv)
   visual_tools.publishTrajectoryLine(my_plan.trajectory_, joint_model_group);
   visual_tools.trigger();
   visual_tools.prompt("next step");
+
+
+
+
+
+
 
   // Now, let's attach the collision object to the robot.
   ROS_INFO_NAMED("tutorial", "Attach the object to the robot");
@@ -394,8 +395,17 @@ int main(int argc, char** argv)
   /* Wait for MoveGroup to recieve and process the attached collision object message */
   visual_tools.prompt("Press 'next' in the RvizVisualToolsGui window to once the collision object disapears");
 
+
+
+
+
+
+
+
+
   // END_TUTORIAL
 
   ros::shutdown();
   return 0;
 }
+

@@ -4,8 +4,9 @@ import sys
 sys.path.append('..')
 
 
-def main():
 
+#def main(default_target_position):
+def main():
     # This is an example of using this code for solving inverse kinematic of FRANKA robot
 
     # Step 1 : specify the target position and orientation(in quaternion)
@@ -31,7 +32,6 @@ def main():
     acw_base_bone_constraint_rads = 2.8973
     acw_base_bone_constraint_degs = acw_base_bone_constraint_rads * 180 / math.pi
     base_bone_orientation = [1, 0, 0, 0] # this means no orientational frame rotation happened from global coordinate.
-
     # Define the specification of consecutive bones in this case they are two group the one
     # rotate around themselves(bone 3, 5 7)
     # and the one working as a hinge (bone 2,4,6)
@@ -142,7 +142,7 @@ def main():
 
     # Fourth part belongs to bone 6(able to work as a local hinge) and bone 7 that only
     # rotate around itself and responsible for twists.
-    m_chain.add_consecutive_hinged_bone(bone_direction_6, bone_length_6+bone_length_7, joint_type_6, hinge_rotation_axis_6, cw_deg_6,
+    m_chain.add_consecutive_hinged_bone(bone_direction_6, bone_length_6+bone_length_7, joint_type_6, hinge_rotation_axis_6, execcw_deg_6,
                                         acw_deg_6, hinge_constraint_reference_axis_6,is_bone_6_fixed,bone_6_orientation)
 
     # In this part the target is set for the chain and whole chain is going to be solved
@@ -151,7 +151,11 @@ def main():
 
 
 if __name__ == "__main__":
+    #x = float(sys.argv[1])
+    #y = float(sys.argv[2])
+    #z = float(sys.argv[3])
+    #default_target_position = [x, y, z]
+    #main(default_target_position)
     main()
-
 
 
